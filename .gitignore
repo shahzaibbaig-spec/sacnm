@@ -1,0 +1,37 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+!.env.local.example
+
+# Frontend dependencies and builds
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/*.log
+frontend/*.tsbuildinfo
+
+# Backend dependencies and runtime files
+backend/vendor/
+backend/.composer/
+backend/composer.phar
+backend/composer-setup.php
+backend/*.log
+backend/storage/logs/*.log
+backend/storage/framework/cache/data/*
+backend/storage/framework/sessions/*
+backend/storage/framework/views/*
+backend/storage/app/public/admissions/
+backend/bootstrap/cache/*.php
+backend/public/storage
+backend/.phpunit.result.cache
+
+# Local tooling and operating system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Generated review artifacts
+screenshots/
+SACNM-Website-Screenshots.pdf

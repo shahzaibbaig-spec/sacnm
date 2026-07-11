@@ -1,0 +1,3 @@
+<?php
+namespace App\Models;use Illuminate\Database\Eloquent\Model;use Illuminate\Database\Eloquent\Relations\BelongsTo;use Illuminate\Database\Eloquent\Relations\HasMany;
+class Admission extends Model{protected $fillable=['user_id','full_name','guardian_name','cnic_bform','date_of_birth','gender','phone','email','address','program','previous_qualification','marks_obtained','total_marks','percentage','cnic_document_path','educational_documents_path','photo_path','notes','status'];protected function casts():array{return ['date_of_birth'=>'date','percentage'=>'decimal:2'];}public function user():BelongsTo{return $this->belongsTo(User::class);}public function messages():HasMany{return $this->hasMany(AdmissionMessage::class)->latest();}}

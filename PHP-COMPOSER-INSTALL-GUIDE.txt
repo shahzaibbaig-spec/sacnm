@@ -1,0 +1,267 @@
+SHAMIM AKHTAR COLLEGE WEBSITE
+PHP, COMPOSER, MYSQL AND LARAVEL SETUP GUIDE FOR WINDOWS
+========================================================
+
+This guide is written for beginners. Complete each step in order.
+
+
+STEP 1: OPEN POWERSHELL AS ADMINISTRATOR
+-----------------------------------------
+
+1. Click the Windows Start button.
+2. Search for PowerShell.
+3. Right-click Windows PowerShell.
+4. Select "Run as administrator".
+5. Click Yes when Windows asks for permission.
+
+Make sure the title bar says "Administrator: Windows PowerShell".
+
+
+STEP 2: INSTALL PHP AND COMPOSER
+--------------------------------
+
+Copy the complete command below, paste it into Administrator PowerShell,
+and press Enter:
+
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://php.new/install/windows/8.4'))
+
+This official Laravel installer installs:
+
+- PHP 8.4
+- Composer
+- Laravel installer
+
+The download may take several minutes. Do not close PowerShell until the
+installation is complete.
+
+
+STEP 3: RESTART VS CODE
+-----------------------
+
+1. Close PowerShell.
+2. Close every VS Code window.
+3. Open VS Code again.
+4. Open the college website project folder.
+5. Select Terminal, then New Terminal.
+
+Restarting VS Code allows it to find the newly installed commands.
+
+
+STEP 4: VERIFY PHP AND COMPOSER
+-------------------------------
+
+Run these commands one at a time in the new VS Code terminal:
+
+php --version
+
+composer --version
+
+You should see output similar to:
+
+PHP 8.4.x
+Composer version 2.x
+
+If both commands show version numbers, installation was successful.
+
+
+STEP 5: OPEN THE BACKEND FOLDER
+-------------------------------
+
+Run:
+
+cd "C:\Users\KORT OFFICAL\Desktop\sacnm\shamim-akhtar-college-website\backend"
+
+
+STEP 6: INSTALL LARAVEL DEPENDENCIES
+------------------------------------
+
+Run:
+
+composer install
+
+The first installation may take several minutes. Wait until it finishes.
+
+
+STEP 7: CREATE THE LARAVEL ENVIRONMENT FILE
+--------------------------------------------
+
+Run:
+
+Copy-Item .env.example .env
+
+Then generate the Laravel application key:
+
+php artisan key:generate
+
+You should see a success message telling you the application key was set.
+
+
+STEP 8: START MYSQL USING XAMPP
+-------------------------------
+
+If you already have XAMPP:
+
+1. Open XAMPP Control Panel.
+2. Click Start beside MySQL.
+3. Click Admin beside MySQL.
+4. phpMyAdmin will open in your browser.
+5. Click New in the left sidebar.
+6. Enter this database name:
+
+nursing_college
+
+7. Click Create.
+
+If you do not have XAMPP or MySQL, install XAMPP first or ask Codex to guide
+you through installing MySQL.
+
+
+STEP 9: CONFIGURE THE DATABASE
+------------------------------
+
+In VS Code, open this file:
+
+shamim-akhtar-college-website/backend/.env
+
+Find the database settings and make sure they look like this:
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nursing_college
+DB_USERNAME=root
+DB_PASSWORD=
+
+For a normal XAMPP installation, DB_PASSWORD remains empty.
+
+If your MySQL root account has a password, enter it after DB_PASSWORD=.
+
+
+STEP 10: CREATE THE DATABASE TABLE
+----------------------------------
+
+Make sure MySQL is running. In the backend terminal, run:
+
+php artisan migrate
+
+This creates the admissions table in the nursing_college database.
+
+
+STEP 11: CREATE THE FILE UPLOAD LINK
+------------------------------------
+
+Run:
+
+php artisan storage:link
+
+This makes uploaded admission documents available to Laravel.
+
+
+STEP 12: START THE LARAVEL BACKEND
+----------------------------------
+
+Run:
+
+php artisan serve --host=127.0.0.1 --port=8000
+
+Keep this terminal open while using the website.
+
+Open this address in your browser:
+
+http://127.0.0.1:8000/api/health
+
+You should see:
+
+{
+  "status": "ok",
+  "message": "Laravel API is working"
+}
+
+
+STEP 13: START THE NEXT.JS FRONTEND
+-----------------------------------
+
+Open a SECOND terminal in VS Code. Do not close the Laravel terminal.
+
+Run:
+
+cd "C:\Users\KORT OFFICAL\Desktop\sacnm\shamim-akhtar-college-website\frontend"
+
+Then run:
+
+npm.cmd run dev
+
+Keep this second terminal open.
+
+Open the website at:
+
+http://localhost:3000
+
+
+IMPORTANT: TWO TERMINALS MUST REMAIN OPEN
+-----------------------------------------
+
+Terminal 1 runs Laravel:
+
+php artisan serve --host=127.0.0.1 --port=8000
+
+Terminal 2 runs Next.js:
+
+npm.cmd run dev
+
+Closing either terminal stops that part of the project.
+
+
+TESTING THE APPLICATION FORM
+----------------------------
+
+1. Open http://localhost:3000/apply
+2. Complete all required fields.
+3. Upload a CNIC/B-form document.
+4. Upload educational documents.
+5. Upload a passport-size photo.
+6. Click Submit Application.
+7. Confirm that a success message appears.
+
+
+COMMON PROBLEMS
+---------------
+
+Problem: php is not recognized
+Solution: Close and reopen VS Code. If it still fails, restart Windows.
+
+Problem: composer is not recognized
+Solution: Close and reopen VS Code. Confirm that the PHP installer completed.
+
+Problem: npm.ps1 cannot be loaded
+Solution: Use npm.cmd instead of npm. For example:
+
+npm.cmd run dev
+
+Problem: Could not connect to the database
+Solution: Start MySQL in XAMPP and check the database settings in backend/.env.
+
+Problem: Database nursing_college does not exist
+Solution: Open phpMyAdmin and create a database named nursing_college.
+
+Problem: Port 8000 is already in use
+Solution: Stop the other Laravel process, or use another port. If you change
+the backend port, also update NEXT_PUBLIC_API_URL in frontend/.env.local.
+
+Problem: Application submission fails
+Solution: Confirm that Laravel is running at http://127.0.0.1:8000 and that
+the health address works.
+
+
+OFFICIAL DOCUMENTATION
+----------------------
+
+Laravel installation:
+https://laravel.com/docs/12.x/installation
+
+Composer installation:
+https://getcomposer.org/doc/00-intro.md
+
+PHP for Windows:
+https://www.php.net/manual/en/install.windows.php
+
