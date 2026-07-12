@@ -1,0 +1,36 @@
+SACNM FRONTEND UPLOAD
+=====================
+
+Upload file: SACNM-frontend-upload.zip
+Target website: https://sacnm.com
+API configured in this build: https://api.sacnm.com
+
+CONTROL PANEL METHOD
+--------------------
+1. Open the File Manager for the main sacnm.com website.
+2. Go to its document root (normally public_html).
+3. Upload SACNM-frontend-upload.zip.
+4. Extract it directly inside the document root.
+5. Confirm index.html and the _next folder are directly in the document root.
+6. Do not delete the existing public_html/sacnm repository folder because
+   api.sacnm.com uses sacnm/backend/public.
+
+SSH METHOD
+----------
+From the repository root after pulling the latest main branch:
+
+  cd ~/public_html/sacnm
+  git pull origin main
+
+Extract the archive into the main domain document root. Confirm the correct
+document root in the hosting control panel before running this command:
+
+  unzip -o deployment/SACNM-frontend-upload.zip -d ~/public_html
+
+Then visit:
+
+  https://sacnm.com
+  https://sacnm.com/account/
+  https://sacnm.com/admin/
+
+Never extract the archive into the backend/public directory.
