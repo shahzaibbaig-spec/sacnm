@@ -25,7 +25,10 @@ export default function Contact() {
               </div>
               <div className="card">
                 <b className="text-navy">Admissions enquiries</b>
-                <p className="mt-2 text-slate-600">Use the secure enquiry form and the college team will contact you.</p>
+                <a href="tel:05827404546" className="mt-2 block text-xl font-black text-teal hover:text-navy">
+                  05827 404546
+                </a>
+                <p className="mt-2 text-slate-600">Call the college office or use the secure enquiry form.</p>
               </div>
               <div className="card">
                 <b className="text-navy">Office timings</b>
