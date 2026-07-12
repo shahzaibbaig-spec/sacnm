@@ -1,0 +1,25 @@
+SACNM MYSQL DATABASE IMPORT
+===========================
+
+Database file: nursing_college.sql
+
+1. In your hosting control panel, open MySQL Databases.
+2. Create a new database (for example: username_nursing_college).
+3. Create a database user with a strong password.
+4. Assign that user to the database with ALL PRIVILEGES.
+5. Open phpMyAdmin and select the new database.
+6. Choose Import, select nursing_college.sql, and start the import.
+7. Put the hosting database details in backend/.env:
+
+DB_CONNECTION=mysql
+DB_HOST=localhost
+DB_PORT=3306
+DB_DATABASE=your_control_panel_database_name
+DB_USERNAME=your_control_panel_database_user
+DB_PASSWORD=your_strong_database_password
+
+8. Create the first administrator from the backend directory:
+
+php artisan admin:create admin@yourdomain.com "YourStrongPassword123!"
+
+Never upload your local .env file or share the database password publicly.
