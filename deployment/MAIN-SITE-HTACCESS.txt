@@ -1,0 +1,23 @@
+Options -Indexes
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Never expose application source, deployment files, or Git metadata
+    # through the main website document root.
+    RewriteRule ^(?:backend|frontend|deployment|screenshots|\.git)(?:/|$) - [F,L,NC]
+
+    # Block repository documentation and local tooling files at the root.
+    RewriteRule ^(?:README\.md|PHP-COMPOSER-INSTALL-GUIDE\.txt|\.gitignore)$ - [F,L,NC]
+</IfModule>
+
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_headers.c>
+    <FilesMatch "\.(?:css|js|png|jpg|jpeg|gif|svg|webp|ico|woff|woff2)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+</IfModule>
