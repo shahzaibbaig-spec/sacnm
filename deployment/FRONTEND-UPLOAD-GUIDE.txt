@@ -1,16 +1,16 @@
 SACNM FRONTEND UPLOAD
 =====================
 
-Upload file: SACNM-frontend-upload.zip
+Upload file: SACNM-frontend-upload-single-domain.zip
 Target website: https://sacnm.com
 Confirmed document root: ~/public_html/sacnm
-API configured in this build: https://api.sacnm.com
+API configured in this build: https://sacnm.com/api
 
 CONTROL PANEL METHOD
 --------------------
 1. Open the File Manager for the main sacnm.com website.
 2. Go to its document root: public_html/sacnm.
-3. Upload SACNM-frontend-upload.zip.
+3. Upload SACNM-frontend-upload-single-domain.zip.
 4. Extract it directly inside the document root.
 5. Confirm index.html and the _next folder are directly in the document root.
 6. Do not delete the existing public_html/sacnm repository folder because
@@ -25,7 +25,7 @@ From the repository root after pulling the latest main branch:
 
 Extract the archive into the confirmed main domain document root:
 
-  unzip -o deployment/SACNM-frontend-upload.zip -d ~/public_html/sacnm
+  unzip -o deployment/SACNM-frontend-upload-single-domain.zip -d ~/public_html/sacnm
 
 Install the protective Apache rules because the Git repository and website
 share the same document root:
@@ -37,5 +37,6 @@ Then visit:
   https://sacnm.com
   https://sacnm.com/account/
   https://sacnm.com/admin/
+  https://sacnm.com/api/health
 
 Never extract the archive into the backend/public directory.
