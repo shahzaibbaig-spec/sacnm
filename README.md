@@ -99,3 +99,15 @@ Manual end-to-end test:
 5. Check the `admissions` MySQL table and `backend/storage/app/public/admissions`.
 
 Replace the placeholder phone, email, office timing and map when official details are available.
+
+## Offline Windows launcher
+
+After the frontend and backend dependencies have been installed once, double-click
+`Start-SACNM-Offline.bat` to run the project without downloading anything. The
+launcher serves the website at `http://127.0.0.1:3000`, overrides the frontend API
+address to the local Laravel server, clears stale generated Next.js files, and checks
+that the compiled CSS is reachable before opening the browser.
+
+XAMPP MySQL, PHP, `backend/vendor`, and `frontend/node_modules` must already exist
+for all forms and portal features to work fully offline. Public pages can still run
+when the database or Laravel API is unavailable.
