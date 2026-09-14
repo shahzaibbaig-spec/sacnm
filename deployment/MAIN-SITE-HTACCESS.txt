@@ -10,7 +10,7 @@ DirectoryIndex index.html
 
     # Run Laravel for same-domain API requests. The END flag prevents the
     # internal backend path from being processed as a public request.
-    RewriteRule ^api(?:/.*)?$ backend/public/index.php [END,QSA]
+    RewriteRule ^api(?:/api)?(?:/.*)?$ backend/public/index.php [END,QSA]
 
     # Never expose application source, deployment files, or Git metadata
     # through the main website document root.

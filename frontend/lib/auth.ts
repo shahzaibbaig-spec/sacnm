@@ -1,4 +1,5 @@
-export const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+const rawUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+export const API_URL = rawUrl.replace(/\/api\/?$/, "");
 export const TOKEN_KEY = "sacnm_portal_token";
 
 export type PortalUser = { id: number; name: string; email: string; phone?: string; is_admin: boolean };

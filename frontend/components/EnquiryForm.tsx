@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { API_URL } from "@/lib/auth";
 
 type Notice = { ok: boolean; text: string } | null;
 
@@ -20,8 +21,7 @@ export default function EnquiryForm() {
     setErrors({});
 
     try {
-      const base = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
-      const response = await fetch(`${base}/api/enquiries`, {
+      const response = await fetch(`${API_URL}/api/enquiries`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify(payload),
