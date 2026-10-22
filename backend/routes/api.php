@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Route;
 
 $registerRoutes = function () {
     Route::get('/health', fn () => response()->json(['status' => 'ok', 'message' => 'Laravel API is working']));
+    Route::get('/settings', [AdminPortalController::class, 'getPublicSettings']);
+    Route::get('/admissions/status', [AdminPortalController::class, 'getPublicSettings']);
     Route::post('/auth/signup', [AuthController::class, 'signup'])->middleware('throttle:10,1');
     Route::post('/auth/login', [AuthController::class, 'login'])->middleware('throttle:10,1');
     Route::post('/enquiries', [EnquiryController::class, 'store'])->middleware('throttle:10,1');
@@ -20,6 +22,8 @@ $registerRoutes = function () {
         Route::get('/student/dashboard', [StudentPortalController::class, 'dashboard']);
 
         Route::prefix('admin')->middleware('admin')->group(function () {
+            Route::get('/settings', [AdminPortalController::class, 'getAdminSettings']);
+            Route::patch('/settings', [AdminPortalController::class, 'updateSettings']);
             Route::get('/applications', [AdminPortalController::class, 'index']);
             Route::get('/applications/{admission}', [AdminPortalController::class, 'show']);
             Route::patch('/applications/{admission}/status', [AdminPortalController::class, 'status']);

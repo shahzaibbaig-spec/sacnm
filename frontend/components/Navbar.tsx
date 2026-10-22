@@ -4,8 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { useAdmissions } from "@/lib/admissions";
 
-const links = [
+const defaultLinks = [
   ["Home", "/"],
   ["About", "/about"],
   ["Programs", "/programs"],
@@ -17,6 +18,17 @@ const links = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const path = usePathname();
+  const { admissionsOpen, hideAdmissionsTab } = useAdmissions();
+
+  const links = defaultLinks.filter(([name, href]) => {
+    if (href === "/apply") {
+      return admissionsOpen;
+    }
+    if (href === "/admissions") {
+      return admissionsOpen || !hideAdmissionsTab;
+    }
+    return true;
+  });
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-sm">
@@ -24,9 +36,17 @@ export default function Navbar() {
         <div className="container-pad flex h-9 items-center justify-between">
           <p className="hidden sm:block">KORT, Mirpur, Azad Jammu & Kashmir</p>
           <div className="ml-auto flex items-center gap-5 font-semibold">
-            <Link href="/admissions" className="hover:text-teal-200">Admissions</Link>
-            <Link href="/portal" className="hover:text-teal-200">Student Portal</Link>
-            <Link href="/admin" className="hover:text-teal-200">Admin</Link>
+            {(admissionsOpen || !hideAdmissionsTab) && (
+              <Link href="/admissions" className="hover:text-teal-200">
+                Admissions
+              </Link>
+            )}
+            <Link href="/portal" className="hover:text-teal-200">
+              Student Portal
+            </Link>
+            <Link href="/admin" className="hover:text-teal-200">
+              Admin
+            </Link>
           </div>
         </div>
       </div>
@@ -64,13 +84,19 @@ export default function Navbar() {
               key={href}
               href={href}
               className={`border-b-2 py-3 text-sm font-bold transition ${
-                path === href ? "border-warm text-navy" : "border-transparent text-slate-600 hover:border-teal hover:text-navy"
+                path === href
+                  ? "border-warm text-navy"
+                  : "border-transparent text-slate-600 hover:border-teal hover:text-navy"
               }`}
             >
               {name}
             </Link>
           ))}
-          <Link href="/apply" className="btn-primary !rounded-md !px-5 !py-3">Apply Now</Link>
+          {admissionsOpen && (
+            <Link href="/apply" className="btn-primary !rounded-md !px-5 !py-3">
+              Apply Now
+            </Link>
+          )}
         </nav>
         <button
           aria-label="Toggle menu"
@@ -88,11 +114,22 @@ export default function Navbar() {
               onClick={() => setOpen(false)}
               key={href}
               href={href}
-              className={`rounded px-3 py-2 font-semibold ${path === href ? "bg-mint text-navy" : "hover:bg-slate-50"}`}
+              className={`rounded px-3 py-2 font-semibold ${
+                path === href ? "bg-mint text-navy" : "hover:bg-slate-50"
+              }`}
             >
               {name}
             </Link>
           ))}
+          {admissionsOpen && (
+            <Link
+              onClick={() => setOpen(false)}
+              href="/apply"
+              className="btn-primary mt-2 !rounded-md !py-2.5 text-center"
+            >
+              Apply Now
+            </Link>
+          )}
         </nav>
       )}
     </header>

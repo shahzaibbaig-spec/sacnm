@@ -1,0 +1,121 @@
+"use client";
+
+import Link from "next/link";
+import PageHero from "@/components/PageHero";
+import SectionHeading from "@/components/SectionHeading";
+import { programs } from "@/lib/data";
+import { useAdmissions } from "@/lib/admissions";
+
+const docs = [
+  "CNIC or B-form",
+  "Recent passport-size photograph",
+  "Educational certificates",
+  "Domicile, if required",
+  "Character certificate, if required",
+  "Any other document required by the college",
+];
+
+const steps = [
+  "Choose your desired program.",
+  "Check the eligibility criteria.",
+  "Fill out the online application form.",
+  "Upload required documents.",
+  "Submit the application.",
+  "The college admission office reviews it.",
+  "Shortlisted applicants will be contacted.",
+];
+
+export default function AdmissionsView() {
+  const { admissionsOpen } = useAdmissions();
+
+  return (
+    <>
+      <PageHero
+        eyebrow={admissionsOpen ? "Admissions open" : "Admissions closed"}
+        title="Take the first step toward a career in care"
+        text={
+          admissionsOpen
+            ? "Applications are open for BS Nursing, BS Midwifery, LHV, CNA and CMW. Review the information below, then apply online."
+            : "Admissions for the current cycle are currently closed. Review the eligibility criteria and documentation below to prepare for the upcoming intake."
+        }
+      />
+
+      <section className="section container-pad">
+        <SectionHeading eyebrow="Eligibility" title="Find the program you qualify for" />
+        <div className="overflow-x-auto rounded-3xl border">
+          <table className="w-full min-w-[680px] text-left">
+            <thead className="bg-navy text-white">
+              <tr>
+                <th className="p-5">Program</th>
+                <th className="p-5">Duration</th>
+                <th className="p-5">Academic criteria</th>
+                <th className="p-5">Gender</th>
+              </tr>
+            </thead>
+            <tbody>
+              {programs.map((p, i) => (
+                <tr key={p.name} className={i % 2 ? "bg-slate-50" : "bg-white"}>
+                  <td className="p-5 font-bold text-navy">{p.name}</td>
+                  <td className="p-5">{p.duration}</td>
+                  <td className="p-5">{p.eligibility}</td>
+                  <td className="p-5">{p.gender}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section className="section bg-slate-50">
+        <div className="container-pad grid gap-14 lg:grid-cols-2">
+          <div>
+            <SectionHeading eyebrow="Be prepared" title="Required documents" />
+            <ul className="grid gap-3">
+              {docs.map((x) => (
+                <li key={x} className="rounded-xl bg-white p-4 shadow-sm">
+                  <span className="mr-3 text-teal">✓</span>
+                  {x}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <SectionHeading eyebrow="How it works" title="Admission process" />
+            <ol className="space-y-4">
+              {steps.map((x, i) => (
+                <li key={x} className="flex items-center gap-4">
+                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-teal font-bold text-white">
+                    {i + 1}
+                  </span>
+                  <span>{x}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section className="section container-pad text-center">
+        <div className="rounded-[2rem] bg-navy p-10 text-white md:p-16">
+          <h2 className="text-4xl font-black">
+            {admissionsOpen ? "Ready to apply?" : "Admissions Currently Closed"}
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-slate-300">
+            {admissionsOpen
+              ? "Complete your application online and our admissions team will guide you through the next steps."
+              : "Online applications are temporarily closed. You may reach out to our admissions office for guidance on future intakes."}
+          </p>
+          {admissionsOpen ? (
+            <Link className="btn-primary mt-7" href="/apply">
+              Apply Now →
+            </Link>
+          ) : (
+            <Link className="btn-secondary mt-7 !rounded-md" href="/contact">
+              Contact Admissions Office →
+            </Link>
+          )}
+        </div>
+      </section>
+    </>
+  );
+}

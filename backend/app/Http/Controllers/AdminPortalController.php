@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admission;
 use App\Models\AdmissionMessage;
+use App\Models\Setting;
 use App\Services\AdmissionPdf;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -14,6 +15,50 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AdminPortalController extends Controller
 {
+    public function getPublicSettings(): JsonResponse
+    {
+        $settings = Setting::allSettings();
+        return response()->json([
+            'status' => 'ok',
+            'data' => $settings,
+            ...$settings,
+        ]);
+    }
+
+    public function getAdminSettings(): JsonResponse
+    {
+        $settings = Setting::allSettings();
+        return response()->json([
+            'status' => 'ok',
+            'data' => $settings,
+            ...$settings,
+        ]);
+    }
+
+    public function updateSettings(Request $request): JsonResponse
+    {
+        $data = $request->validate([
+            'admissions_open' => ['nullable', 'boolean'],
+            'hide_admissions_tab' => ['nullable', 'boolean'],
+        ]);
+
+        if (array_key_exists('admissions_open', $data)) {
+            Setting::set('admissions_open', $data['admissions_open']);
+        }
+
+        if (array_key_exists('hide_admissions_tab', $data)) {
+            Setting::set('hide_admissions_tab', $data['hide_admissions_tab']);
+        }
+
+        $settings = Setting::allSettings();
+
+        return response()->json([
+            'message' => 'Settings updated successfully.',
+            'data' => $settings,
+            ...$settings,
+        ]);
+    }
+
     public function index(Request $request): JsonResponse
     {
         $query = Admission::with('user:id,name,email')->withCount('messages')->latest();
